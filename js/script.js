@@ -16,7 +16,10 @@
 
 $(function () {
 	/* inizializzazione locale di moment per la lingua italiana */
-	moment.locale('it');
+
+	const lang = 'cn'
+
+	moment.locale(lang);
 
 	// handlebars
 	var source = $("#entry-template").html();
@@ -37,7 +40,6 @@ $(function () {
 
 	// la appendo nel DOM in container
 	$('.container').append(html);
-
 
 
 	// al click del bottone aggiungo o tolgo un mese e ristampo i giorni
@@ -63,9 +65,6 @@ $(function () {
 	setHolidays(initDate.format('M') - 1, thisYear);
 
 
-
-
-
 	/* funzioni */
 
 	function setHolidays(m, year) {
@@ -88,10 +87,20 @@ $(function () {
 					currentday.addClass('holiday').append(obj.response[i].name);
 				}
 
-				// $('p').each(function (index, value) {
-				// 	let a = $(this).text();
-				// 	console.log(a);
-				// });
+				/*  Posso utilizzare anche forEach ed JQuery*/
+				/* col forEach JS */
+				/* 	obj.response.forEach(value => {
+					let currentday = $(`p[data-set='${value.date}'`);
+					currentday.addClass('holiday').append(value.name);
+				});
+ 				*/
+				/* col each JQuery */
+				/* $(obj.response).each((index, value) => {
+					let currentday = $(`p[data-set='${value.date}'`);
+					currentday.addClass('holiday').append(value.name);
+				}); */
+
+				/*  */
 
 			},
 			error: function () {
@@ -103,15 +112,13 @@ $(function () {
 
 	// addZero, aggiunge zero ad un numero se minore di 10
 	function addZero(int) {
-		if (int < 10) {
-			return (`0${int}`);
-		} else return int;
+		return int < 10 ? '0' + int : int;
 	}
 
 	// cambio mese
 
 	function changeMonth(int) {
-		initDate = initDate.add(int, 'M');
+		initDate.add(int, 'M');
 		/* meseAnno = initDate.format('MMMM YYYY').toUpperCase(); */
 
 		$('.container').empty();
@@ -129,7 +136,6 @@ $(function () {
 	// stampa i giorni
 
 	function printDay() {
-
 		$('.days').empty();
 		// salvo in una var i giorni del mese corrente
 		let dayInMonth = moment(initDate, 'MMMM YYYY').daysInMonth();
