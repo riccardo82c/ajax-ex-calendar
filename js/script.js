@@ -16,8 +16,7 @@
 
 $(function () {
 
-	/* let a = moment().format('MMMM Do YYYY, h:mm:ss a');
-	console.log(a); */
+
 
 	/* inizializzazione locale di moment per la lingua italiana */
 	moment.locale('it');
@@ -26,7 +25,8 @@ $(function () {
 	var source = document.getElementById("entry-template").innerHTML;
 	var template = Handlebars.compile(source);
 
-	let initDate = moment("2018-01-01")
+	// setto data iniziale del calendario
+	const initDate = moment("2018-01-01")
 
 
 	console.log(initDate.format('DD MMMM YYYY'));
@@ -38,7 +38,7 @@ $(function () {
 	// console.log(month);
 
 	// oggetto da usare nel template di HB
-	var meseCalendario = {
+	let meseCalendario = {
 		meseAnno: initDate.format('MMMM YYYY').toUpperCase(),
 	};
 
@@ -51,23 +51,45 @@ $(function () {
 
 	// 
 
-
+	// salvo in una var i giorni del mese corrente
 	let dayInMonth = moment(meseCalendario.meseAnno, 'MMMM YYYY').daysInMonth();
 	console.log(dayInMonth);
 
-	for (let i = 0; i <= dayInMonth; i++) {
-		$('.days').append(`<p>${addZero(i)}</p>`);
-
-
+	// creo un ciclo per stampare i giorni correnti
+	for (let i = 1; i <= dayInMonth; i++) {
+		$('.days').append(`<p data-set='${initDate.format('YYYY-MM')}-${addZero(i)}'>${addZero(i)} ${initDate.format('MMMM')} </p>`);
 	}
 
 
+	// chiamata AJAX
+
+	$.ajax({
+		method: 'GET',
+		url: 'https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0',
+		success: function (data) {
+
+			for (let i = 0; i < data.response.length; i++) {
+				// console.log(data.response[i].date);
+				let currentday = $(`p[data-set='${data.response[i].date}'`)
+				currentday.addClass('holiday').append(data.response[i].name);
+			}
+
+			// $('p').each(function (index, value) {
+			// 	/* if (($(this).attr('[data-set]') === data.response[0])) {
+			// 		console.log('eccolo');
+			// 	} */
+			// });
+
+		},
+		error: function () {
+
+		}
+	});
 
 
 	/* funzioni */
 
 	// addZero, aggiunge zero ad un numero se minore di 10
-
 	function addZero(int) {
 		if (int < 10) {
 			return (`0${int}`);
