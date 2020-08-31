@@ -12,20 +12,24 @@
 </head>
 
 <body>
-	<h1>Calendar</h1>
-	<button id="prev">prev</button>
-	<div class="container"></div>
-	<button id="next">next</button>
-	<div class="days"></div>
+	<h1>Calendar </h1>
+
+	<div class="top">
+		<button id="prev">prev</button>
+		<span class="container"></span>
+		<button id="next">next</button>
+	</div>
+
+	<div class="bottom">
+		<div class="days"></div>
+	</div>
 
 
 	<!-- handlebars template script -->
 	<script id="entry-template" type="text/x-handlebars-template">
 	  <div class="entry">
 	    
-	    <span class="body">
-	      {{meseAnno}}
-		</span>
+	    <h3 class="mese">{{meseAnno}}</h3>
 		
 	  </div>
 	</script>

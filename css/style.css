@@ -11,13 +11,51 @@
 }
 
 body {
+	width: 100%;
+	height: calc(100vh - 40px);
 	text-align: center;
+
+	color: cornsilk;
+	background-color: rgb(6, 34, 77);
+
+}
+
+h1 {
+	margin: 20px;
+}
+
+.top {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.container {
+	line-height: 37px;
+}
+
+
+button {
+	padding: 10px 20px;
+	background-color: teal;
+	border: 1px solid cornsilk;
+
+	border-radius: 10px;
+
+	text-transform: capitalize;
+
+	cursor: pointer;
+}
+
+
+
+
+
+.mese {
+	width: 200px;
+
 }
 
 .holiday {
-	color: red;
-}
-
-.days {
-	display: inline-block;
+	color: crimson;
 }

@@ -24,6 +24,8 @@ $(function () {
 
 	// setto data iniziale del calendario
 	let initDate = moment("2018-01-01");
+	const thisYear = initDate.format('YYYY');
+	$('h1').append(thisYear);
 
 	// oggetto da usare nel template di HB
 	let meseCalendario = {
@@ -36,39 +38,37 @@ $(function () {
 	// la appendo nel DOM in container
 	$('.container').append(html);
 
+
+
 	// al click del bottone aggiungo o tolgo un mese e ristampo i giorni
 	$('#prev').click(function () {
-
 		if (initDate.format('MM') !== '01') {
 			changeMonth('-1');
 			printDay();
-
 		} else {
 			alert('errore');
 		}
-
-
-
 	})
 
 	$('#next').click(function () {
 		if (initDate.format('MM') !== '12') {
 			changeMonth('1');
 			printDay();
-
 		} else {
 			alert('errore');
 		}
 	})
 
-
 	printDay();
-	setHolidays(initDate.format('M') - 1);
+	setHolidays(initDate.format('M') - 1, thisYear);
 
 
 
 
-	function setHolidays(int) {
+
+	/* funzioni */
+
+	function setHolidays(m, year) {
 
 		// chiamata AJAX
 		$.ajax({
@@ -77,8 +77,8 @@ $(function () {
 			data: {
 				/* year: initDate.format('YYYY'),
 				month: initDate.format('M') */
-				year: 2018,
-				month: int
+				year: year,
+				month: m
 			},
 			success: function (obj) {
 
@@ -101,9 +101,6 @@ $(function () {
 
 	};
 
-
-	/* funzioni */
-
 	// addZero, aggiunge zero ad un numero se minore di 10
 	function addZero(int) {
 		if (int < 10) {
@@ -115,8 +112,7 @@ $(function () {
 
 	function changeMonth(int) {
 		initDate = initDate.add(int, 'M');
-
-		meseAnno = initDate.format('MMMM YYYY').toUpperCase();
+		/* meseAnno = initDate.format('MMMM YYYY').toUpperCase(); */
 
 		$('.container').empty();
 		var source = $("#entry-template").html();
@@ -126,9 +122,7 @@ $(function () {
 		};
 		var html = template(meseCalendario);
 		$('.container').append(html);
-		setHolidays(initDate.format('M') - 1);
-
-
+		setHolidays(initDate.format('M') - 1, thisYear);
 	}
 
 
@@ -143,27 +137,6 @@ $(function () {
 		for (let i = 1; i <= dayInMonth; i++) {
 			$('.days').append(`<p data-set='${initDate.format('YYYY-MM')}-${addZero(i)}'>${addZero(i)} ${initDate.format('MMMM')} </p>`);
 		}
-
-
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
