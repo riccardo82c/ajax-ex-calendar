@@ -17,7 +17,7 @@
 $(function () {
 	/* inizializzazione locale di moment per la lingua italiana */
 
-	const lang = 'cn'
+	const lang = 'it'
 
 	moment.locale(lang);
 
@@ -40,7 +40,6 @@ $(function () {
 
 	// la appendo nel DOM in container
 	$('.container').append(html);
-
 
 	// al click del bottone aggiungo o tolgo un mese e ristampo i giorni
 	$('#prev').click(function () {
@@ -67,16 +66,14 @@ $(function () {
 
 	/* funzioni */
 
-	function setHolidays(m, year) {
+	function setHolidays(m, y) {
 
 		// chiamata AJAX
 		$.ajax({
 			method: 'GET',
 			url: 'https://flynn.boolean.careers/exercises/api/holidays',
 			data: {
-				/* year: initDate.format('YYYY'),
-				month: initDate.format('M') */
-				year: year,
+				year: y,
 				month: m
 			},
 			success: function (obj) {
@@ -115,8 +112,8 @@ $(function () {
 		return int < 10 ? '0' + int : int;
 	}
 
-	// cambio mese
 
+	// cambio mese
 	function changeMonth(int) {
 		initDate.add(int, 'M');
 		/* meseAnno = initDate.format('MMMM YYYY').toUpperCase(); */
@@ -124,6 +121,8 @@ $(function () {
 		$('.container').empty();
 		var source = $("#entry-template").html();
 		var template = Handlebars.compile(source);
+
+		/* console.log('$' + $); */
 		let meseCalendario = {
 			meseAnno: initDate.format('MMMM YYYY').toUpperCase(),
 		};
@@ -134,7 +133,6 @@ $(function () {
 
 
 	// stampa i giorni
-
 	function printDay() {
 		$('.days').empty();
 		// salvo in una var i giorni del mese corrente
