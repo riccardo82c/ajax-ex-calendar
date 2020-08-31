@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/style.css">
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
 	<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<title>Calendar</title>
@@ -13,6 +13,23 @@
 
 <body>
 	<h1>Calendar</h1>
+
+	<div class="container"></div>
+	<div class="days"></div>
+
+
+	<!-- handlebars template script -->
+	<script id="entry-template" type="text/x-handlebars-template">
+	  <div class="entry">
+	    <button>prev</button>
+	    <span class="body">
+	      {{meseAnno}}
+		</span>
+		<button>next</button>
+	  </div>
+	</script>
+
+
 
 	<script src="js/script.js" charset="utf-8"></script>
 </body>
