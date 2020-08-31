@@ -15,45 +15,46 @@
 	Evidenziare le festività nella lista */
 
 $(function () {
-
-
-
 	/* inizializzazione locale di moment per la lingua italiana */
 	moment.locale('it');
 
 	// handlebars
-	var source = document.getElementById("entry-template").innerHTML;
+	var source = $("#entry-template").html();
 	var template = Handlebars.compile(source);
 
 	// setto data iniziale del calendario
-	const initDate = moment("2018-01-01")
-
-
-	console.log(initDate.format('DD MMMM YYYY'));
-
-	// data corrente con mese e anno
-	// let monthYear = moment('08 2018').format('MM YYYY');
-	// let month = moment().format('MMMM');
-	// let nDay = moment('').daysInMonth();
-	// console.log(month);
+	let initDate = moment("2018-01-01");
 
 	// oggetto da usare nel template di HB
 	let meseCalendario = {
 		meseAnno: initDate.format('MMMM YYYY').toUpperCase(),
 	};
 
-
-
 	// carico il template dell 'oggetto in una variabile 
 	var html = template(meseCalendario);
 	// la appendo nel DOM in container
 	$('.container').append(html);
 
-	// 
+	// al click del bottone aggiungo o tolgo un mese
+	$('#prev').click(function () {
+		initDate = initDate.add('-1', 'M');
+		console.log(initDate.format('DD MMMM YYYY'));
+		console.log('prev');
+		meseAnno = initDate.format('MMMM YYYY').toUpperCase();
+
+	})
+
+	$('#next').click(function () {
+		initDate = initDate.add('1', 'M');
+		console.log(initDate.format('DD MMMM YYYY'));
+		console.log('next');
+		meseAnno = initDate.format('MMMM YYYY').toUpperCase();
+	})
+
 
 	// salvo in una var i giorni del mese corrente
 	let dayInMonth = moment(meseCalendario.meseAnno, 'MMMM YYYY').daysInMonth();
-	console.log(dayInMonth);
+
 
 	// creo un ciclo per stampare i giorni correnti
 	for (let i = 1; i <= dayInMonth; i++) {
@@ -65,7 +66,11 @@ $(function () {
 
 	$.ajax({
 		method: 'GET',
-		url: 'https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0',
+		url: 'https://flynn.boolean.careers/exercises/api/holidays',
+		data: {
+			year: 2018,
+			month: 0
+		},
 		success: function (data) {
 
 			for (let i = 0; i < data.response.length; i++) {
@@ -75,9 +80,8 @@ $(function () {
 			}
 
 			// $('p').each(function (index, value) {
-			// 	/* if (($(this).attr('[data-set]') === data.response[0])) {
-			// 		console.log('eccolo');
-			// 	} */
+			// 	let a = $(this).text();
+			// 	console.log(a);
 			// });
 
 		},
